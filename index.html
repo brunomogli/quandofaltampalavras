@@ -5,158 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quando Faltam Palavras</title>
     <style>
-        /* --- ESTILOS DE TELA CHEIA SEM ROLAGEM --- */
-        * {
+        /* Estilos básicos para centralizar o jogo/página na tela */
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
-
-        html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            background: #0b0c10;
-            color: #e2e8f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .background-glow {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at center, #1e1b4b 0%, #0b0c10 75%);
-            opacity: 0.8;
-            z-index: 1;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 20px;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 300;
-            letter-spacing: -0.5px;
+            background-color: #000000;
             color: #ffffff;
-            margin-bottom: 12px;
-            text-shadow: 0 0 20px rgba(167, 139, 250, 0.2);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        p {
-            font-size: 1rem;
-            color: #94a3b8;
-            font-style: italic;
-            margin-bottom: 40px;
-            line-height: 1.5;
-            font-weight: 300;
-        }
-
-        .btn-experience {
-            display: inline-block;
-            padding: 20px 40px;
-            font-size: 1.15rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #0b0c10;
-            background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
-            border: none;
-            border-radius: 50px;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn-experience:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.5);
-            background: linear-gradient(135deg, #c4b5fd 0%, #ddd6fe 100%);
-        }
-
-        /* Contador discreto no rodapé */
-        .visit-counter {
-            position: absolute;
-            bottom: 15px;
-            font-size: 0.75rem;
-            color: #475569;
-            z-index: 2;
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 1.75rem; }
-            p { font-size: 0.9rem; margin-bottom: 30px; }
-            .btn-experience {
-                padding: 18px 28px;
-                font-size: 0.95rem;
-                width: 90%;
-            }
+        #canvasContainer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="background-glow"></div>
-
-    <main class="container">
-        <h1>Quando Faltam Palavras</h1>
-        <p>Nem todas as histórias precisam ser ditas em voz alta.</p>
-        
-        <!-- Altere o href abaixo no futuro para o link onde o jogo estará rodando -->
-        <a href="#" class="btn-experience">
-            Viver a experiência
-        </a>
-    </main>
-
-    <div class="visit-counter">
-        Acessos: <span id="visits">...</span>
+    <div id="canvasContainer">
+        <!-- O Canvas do GDevelop será inserido aqui automaticamente -->
     </div>
 
+    <!-- Scripts do GDevelop (Gerados na exportação) -->
+    <script src="gd.js" crossorigin="anonymous"></script>
+    <script src="pixi.js" crossorigin="anonymous"></script>
+    <script src="code0.js" crossorigin="anonymous"></script>
+
+    <!-- Script de Notificação de Acesso (Discord Webhook da Landing Page) -->
     <script>
-        // --- RASTREADOR DE ACESSOS ---
-        const chaveUnica = 'quando-faltam-palavras-homenagem';
-        const discordWebhookURL = "https://discord.com/api/webhooks/1531715613624635462/WkNwDsvnYxJp8JCZDH9kaRubekOxQqBY7Z8l6CxCCJY4dBS0DOTduYiUPYToBnsBdOkr"; 
+        (function registrarAcesso() {
+            // URL do seu Webhook de acesso à página
+            const webhookUrl = "https://discord.com/api/webhooks/1531715613624635462/WkNwDsvnYxJp8JCZDH9kaRubekOxQqBY7Z8l6CxCCJY4dBS0DOTduYiUPYToBnsBdOkr";
 
-        async function registrarAcesso() {
-            try {
-                // 1. Atualiza a contagem geral no serviço público
-                const res = await fetch(`https://api.countapi.xyz/hit/${chaveUnica}/visitas`);
-                const data = await res.json();
-                
-                // Exibe o número no rodapé
-                document.getElementById('visits').innerText = data.value;
-
-                // 2. Dispara o aviso para o seu Discord
-                const agora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-                
-                fetch(discordWebhookURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        content: `✨ **Alguém acabou de acessar a homenagem!**\n📅 **Data e Hora:** ${agora}\n📊 **Número total de acessos:** ${data.value}`
-                    })
-                });
-
-            } catch (err) {
-                console.log("Erro ao contabilizar:", err);
-            }
-        }
-
-        // Dispara a função automaticamente quando a página carregar
-        window.onload = registrarAcesso;
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({
+                    content: "✨ **Alguém acabou de acessar a página da homenagem!**"
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Notificação enviada ao Discord com sucesso!");
+                } else {
+                    console.error("Erro ao enviar notificação ao Discord:", response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error("Erro na requisição da landing page:", error);
+            });
+        })();
     </script>
-
 </body>
 </html>
