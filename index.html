@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quando faltam palavras</title>
     <style>
-        /* Reset de tela e travamento de rolagem */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,8 +14,8 @@
         html, body {
             width: 100%;
             height: 100vh;
-            overflow: hidden; /* Garante que NUNCA terá barra de rolagem */
-            background-color: #0b0d12;
+            overflow: hidden; /* Zero rolagem */
+            background: radial-gradient(circle at center, #121824 0%, #05070a 100%);
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
@@ -24,74 +23,101 @@
             align-items: center;
         }
 
-        /* Container Principal */
-        .card {
+        .main-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 30px 20px;
-            max-width: 500px;
+            padding: 20px;
+            max-width: 650px;
             width: 90%;
         }
 
-        /* Título do Jogo em destaque minimalista */
+        /* Título marcante e delicado em minúsculas */
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 300;
             letter-spacing: 2px;
             color: #f0f6fc;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: lowercase;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
         }
 
-        /* Frase instigante */
+        /* Subtítulo bem visível com a instrução do fone */
         .subtitle {
-            font-size: 1rem;
+            font-size: 1.15rem;
             font-weight: 300;
-            color: #8b949e;
-            margin-bottom: 35px;
-            line-height: 1.6;
+            color: #c9d1d9; /* Cor clara com bom contraste */
+            margin-bottom: 45px;
+            line-height: 1.7;
             font-style: italic;
             text-transform: lowercase;
+            max-width: 520px;
         }
 
-        /* Botão "viva a experiência" */
-        .play-button {
-            display: inline-block;
-            padding: 14px 38px;
-            font-size: 1.05rem;
+        /* Destaque para o fone */
+        .subtitle span {
+            color: #58a6ff;
+            font-style: normal;
             font-weight: 400;
+        }
+
+        /* Botão Glamouroso com Pulso / Glow */
+        .play-button {
+            position: relative;
+            display: inline-block;
+            padding: 18px 48px;
+            font-size: 1.15rem;
+            font-weight: 500;
             color: #ffffff;
-            background-color: #238636;
-            border: none;
-            border-radius: 30px; /* Bordas arredondadas para ar de suavidade */
+            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(35, 134, 54, 0.3);
             text-transform: lowercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(46, 160, 67, 0.4), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            animation: pulseGlow 3s infinite;
         }
 
         .play-button:hover {
-            background-color: #2ea043;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(46, 160, 67, 0.45);
+            transform: scale(1.06);
+            background: linear-gradient(135deg, #2ea043 0%, #3fb950 100%);
+            box-shadow: 0 0 35px rgba(46, 160, 67, 0.7), 
+                        0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .play-button:active {
-            transform: translateY(-1px);
+            transform: scale(0.98);
+        }
+
+        /* Animação que faz o botão "respirar" um brilho chamativo */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 15px rgba(46, 160, 67, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(46, 160, 67, 0.65), 0 0 8px rgba(255, 255, 255, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(46, 160, 67, 0.3);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div class="main-container">
         <h1>quando faltam palavras</h1>
-        <p class="subtitle">tem conexões que não aceitam fins comuns.<br>coloque os fones de ouvido e descubra o que não dá pra descrever.</p>
+        <p class="subtitle">
+            tem conexões que não aceitam fins comuns.<br>
+            <span>🎧 coloque os fones de ouvido</span> e descubra o que não dá pra descrever.
+        </p>
         <a href="#" class="play-button">viva a experiência</a>
     </div>
 
