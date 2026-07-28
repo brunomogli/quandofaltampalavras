@@ -16,15 +16,14 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Trava qualquer barra de rolagem */
-            background: #0b0c10; /* Fundo escuro profundo */
+            overflow: hidden;
+            background: #0b0c10;
             color: #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* --- AMBIENTAÇÃO VISUAL --- */
         .background-glow {
             position: absolute;
             width: 100vw;
@@ -46,7 +45,6 @@
             justify-content: center;
         }
 
-        /* --- TÍTULO E SUBTÍTULO --- */
         h1 {
             font-size: 2.2rem;
             font-weight: 300;
@@ -65,7 +63,6 @@
             font-weight: 300;
         }
 
-        /* --- BOTÃO CENTRAL DE ALTO IMPACTO --- */
         .btn-experience {
             display: inline-block;
             padding: 20px 40px;
@@ -89,7 +86,15 @@
             background: linear-gradient(135deg, #c4b5fd 0%, #ddd6fe 100%);
         }
 
-        /* Ajuste para telas pequenas/celulares */
+        /* Contador discreto no rodapé */
+        .visit-counter {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.75rem;
+            color: #475569;
+            z-index: 2;
+        }
+
         @media (max-width: 480px) {
             h1 { font-size: 1.75rem; }
             p { font-size: 0.9rem; margin-bottom: 30px; }
@@ -109,11 +114,49 @@
         <h1>Quando Faltam Palavras</h1>
         <p>Nem todas as histórias precisam ser ditas em voz alta.</p>
         
-        <!-- Onde está o href="#" você colocará o link de onde o jogo estiver hospedado -->
+        <!-- Altere o href abaixo no futuro para o link onde o jogo estará rodando -->
         <a href="#" class="btn-experience">
             Viver a experiência
         </a>
     </main>
+
+    <div class="visit-counter">
+        Acessos: <span id="visits">...</span>
+    </div>
+
+    <script>
+        // --- RASTREADOR DE ACESSOS ---
+        const chaveUnica = 'quando-faltam-palavras-homenagem';
+        const discordWebhookURL = "https://discord.com/api/webhooks/1531715613624635462/WkNwDsvnYxJp8JCZDH9kaRubekOxQqBY7Z8l6CxCCJY4dBS0DOTduYiUPYToBnsBdOkr"; 
+
+        async function registrarAcesso() {
+            try {
+                // 1. Atualiza a contagem geral no serviço público
+                const res = await fetch(`https://api.countapi.xyz/hit/${chaveUnica}/visitas`);
+                const data = await res.json();
+                
+                // Exibe o número no rodapé
+                document.getElementById('visits').innerText = data.value;
+
+                // 2. Dispara o aviso para o seu Discord
+                const agora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+                
+                fetch(discordWebhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: `✨ **Alguém acabou de acessar a homenagem!**\n📅 **Data e Hora:** ${agora}\n📊 **Número total de acessos:** ${data.value}`
+                    })
+                });
+
+            } catch (err) {
+                console.log("Erro ao contabilizar:", err);
+            }
+        }
+
+        // Dispara a função automaticamente quando a página carregar
+        window.onload = registrarAcesso;
+    </script>
 
 </body>
 </html>
