@@ -8,7 +8,7 @@
     <!-- Importando fontes cinematográficas do Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         /* Reset total e trava rígida de rolagem */
@@ -23,9 +23,9 @@
         html, body {
             width: 100%;
             height: 100vh;
-            height: -webkit-fill-available; /* Ajuste para navegação mobile (Safari/Chrome iOS) */
-            overflow: hidden; /* Trava zero rolagem */
-            background-color: #05070a;
+            height: -webkit-fill-available;
+            overflow: hidden;
+            background-color: #080a0f; /* Fundo escuro profundo e limpo */
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
             display: flex;
@@ -34,32 +34,7 @@
             position: relative;
         }
 
-        /* Luzes de fundo ambiente */
-        .bg-glow-1 {
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(46, 160, 67, 0.18) 0%, rgba(0,0,0,0) 70%);
-            top: 15%;
-            left: 20%;
-            filter: blur(70px);
-            pointer-events: none;
-            animation: floatGlow 10s infinite alternate ease-in-out;
-        }
-
-        .bg-glow-2 {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(88, 166, 255, 0.15) 0%, rgba(0,0,0,0) 70%);
-            bottom: 10%;
-            right: 15%;
-            filter: blur(80px);
-            pointer-events: none;
-            animation: floatGlow 14s infinite alternate-reverse ease-in-out;
-        }
-
-        /* Container Principal com Glassmorphism */
+        /* Cartão Central com alto contraste */
         .main-card {
             position: relative;
             z-index: 10;
@@ -68,160 +43,118 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px 24px;
-            max-width: 520px;
+            padding: 42px 28px;
+            max-width: 480px;
             width: 88%;
-            background: rgba(15, 20, 30, 0.55);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 28px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            background: #111622; /* Card bem definido */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
         }
 
-        /* Título do Jogo em Tipografia Editorial Clássica */
+        /* Título em Nítido Branco/Sliver */
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            background: linear-gradient(180deg, #ffffff 0%, #adbac7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 16px;
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #ffffff; /* Branco puro e cristalino */
+            margin-bottom: 18px;
             text-transform: lowercase;
-            line-height: 1.1;
-            filter: drop-shadow(0 2px 10px rgba(255, 255, 255, 0.1));
+            line-height: 1.15;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Subtítulo Instigante */
+        /* Subtítulo Nítido e Levíssimo Cinza-Claro */
         .subtitle {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.25rem;
-            font-weight: 300;
+            font-weight: 400;
             font-style: italic;
-            color: #b1bac4;
+            color: #d1d5db; /* Cinza claro de alta leitura */
             margin-bottom: 24px;
             line-height: 1.5;
             text-transform: lowercase;
-            max-width: 420px;
         }
 
-        /* Tag dos fones de ouvido */
+        /* Tag dos fones de ouvido - Azul bem visível */
         .headphone-tag {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(88, 166, 255, 0.1);
-            border: 1px solid rgba(88, 166, 255, 0.25);
-            color: #79c0ff;
-            padding: 6px 14px;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 8px 16px;
             border-radius: 20px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
-            font-style: normal;
-            font-weight: 400;
+            font-size: 0.85rem;
+            font-weight: 600;
             letter-spacing: 0.3px;
             margin-bottom: 28px;
         }
 
-        /* O Botão "viva a experiência" */
+        /* Botão "viva a experiência" verde vivo e marcante */
         .play-button {
             position: relative;
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            padding: 16px 40px;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #ffffff;
-            background: linear-gradient(135deg, #1f6feb 0%, #2ea043 100%);
-            border: none;
+            padding: 16px 36px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff !important;
+            background-color: #16a34a; /* Verde vivo */
+            border: 1px solid #22c55e;
             border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
             text-transform: lowercase;
-            letter-spacing: 1.5px;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 25px rgba(46, 160, 67, 0.35),
-                        0 8px 20px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
             width: 100%;
             max-width: 280px;
         }
 
-        /* Efeito Shimmer (Brilho no Botão) */
-        .play-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-            transition: 0.5s;
-            animation: shimmer 3.5s infinite;
-        }
-
         .play-button:active {
-            transform: scale(0.96);
-            background: linear-gradient(135deg, #238636 0%, #3fb950 100%);
+            transform: scale(0.97);
+            background-color: #15803d;
         }
 
-        /* Animações */
-        @keyframes shimmer {
-            0% { left: -100%; }
-            30% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        @keyframes floatGlow {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(20px, 30px); }
-        }
-
-        /* 📱 OTIMIZAÇÕES EXCLUSIVAS PARA CELULAR (MOBILE) */
+        /* 📱 Ajuste exclusivo para telas de celular */
         @media (max-width: 480px) {
             .main-card {
-                padding: 32px 20px;
+                padding: 34px 20px;
                 width: 90%;
-                border-radius: 20px;
             }
 
             h1 {
-                font-size: 2.2rem;
-                letter-spacing: 1px;
-                margin-bottom: 12px;
+                font-size: 2.3rem;
+                margin-bottom: 14px;
             }
 
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1.15rem;
                 margin-bottom: 20px;
-                line-height: 1.45;
             }
 
             .headphone-tag {
-                font-size: 0.75rem;
-                padding: 5px 12px;
+                font-size: 0.8rem;
+                padding: 6px 14px;
                 margin-bottom: 24px;
             }
 
             .play-button {
-                padding: 14px 28px;
-                font-size: 0.95rem;
-                max-width: 100%;
+                padding: 15px 28px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Luzes de iluminação de fundo -->
-    <div class="bg-glow-1"></div>
-    <div class="bg-glow-2"></div>
-
-    <!-- Cartão Central com Efeito de Vidro -->
+    <!-- Cartão Central com Alto Contraste -->
     <div class="main-card">
         <h1>quando faltam palavras</h1>
         
