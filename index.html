@@ -5,45 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quando Faltam Palavras</title>
     <style>
-        /* Estilos básicos para centralizar o jogo/página na tela */
-        body, html {
+        /* Estilos visuais da sua página web */
+        body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000000;
+            background-color: #0d1117;
             color: #ffffff;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            text-align: center;
         }
 
-        #canvasContainer {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: #161b22;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid #30363d;
+        }
+
+        h1 {
+            color: #58a6ff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #8b949e;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #238636;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2ea043;
         }
     </style>
 </head>
 <body>
 
-    <div id="canvasContainer">
-        <!-- O Canvas do GDevelop será inserido aqui automaticamente -->
+    <div class="container">
+        <h1>Quando Faltam Palavras</h1>
+        <p>Bem-vindo à página da homenagem.</p>
+        
+        <!-- Seus botões ou conteúdos da web ficam aqui -->
+        <a href="#" class="btn">Iniciar Experiência</a>
     </div>
 
-    <!-- Scripts do GDevelop (Gerados na exportação) -->
-    <script src="gd.js" crossorigin="anonymous"></script>
-    <script src="pixi.js" crossorigin="anonymous"></script>
-    <script src="code0.js" crossorigin="anonymous"></script>
-
-    <!-- Script de Notificação de Acesso (Discord Webhook da Landing Page) -->
+    <!-- SCRIPT DO WEBHOOK DO DISCORD -->
     <script>
-        (function registrarAcesso() {
-            // URL do seu Webhook de acesso à página
+        // Dispara assim que a página termina de carregar no navegador
+        window.addEventListener('DOMContentLoaded', () => {
             const webhookUrl = "https://discord.com/api/webhooks/1531715613624635462/WkNwDsvnYxJp8JCZDH9kaRubekOxQqBY7Z8l6CxCCJY4dBS0DOTduYiUPYToBnsBdOkr";
 
             fetch(webhookUrl, {
@@ -55,17 +81,9 @@
                     content: "✨ **Alguém acabou de acessar a página da homenagem!**"
                 })
             })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Notificação enviada ao Discord com sucesso!");
-                } else {
-                    console.error("Erro ao enviar notificação ao Discord:", response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error("Erro na requisição da landing page:", error);
-            });
-        })();
+            .then(res => console.log("Aviso enviado ao Discord com sucesso!"))
+            .catch(err => console.error("Erro ao notificar Discord:", err));
+        });
     </script>
 </body>
 </html>
