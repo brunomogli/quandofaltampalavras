@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>quando faltam palavras</title>
 
-    <!-- Importando fontes cinematográficas do Google Fonts -->
+    <!-- Fonte ultra legível para mobile -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Reset total e trava rígida de rolagem */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -25,96 +24,86 @@
             height: 100vh;
             height: -webkit-fill-available;
             overflow: hidden;
-            background-color: #080a0f; /* Fundo escuro profundo e limpo */
+            background-color: #030712; /* Fundo bem escuro para contrastar com o card */
             color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
 
-        /* Cartão Central com alto contraste */
+        /* Card com fundo bem visível e borda contrastante */
         .main-card {
-            position: relative;
-            z-index: 10;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 42px 28px;
-            max-width: 480px;
-            width: 88%;
-            background: #111622; /* Card bem definido */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            padding: 36px 24px;
+            max-width: 440px;
+            width: 90%;
+            background-color: #111827; /* Cinza-azulado fechado porém bem visível */
+            border: 1px solid #374151;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
         }
 
-        /* Título em Nítido Branco/Sliver */
+        /* Título em BRANCO PURO e Negrito */
         h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            color: #ffffff; /* Branco puro e cristalino */
-            margin-bottom: 18px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff !important; /* Destaque máximo */
+            margin-bottom: 16px;
             text-transform: lowercase;
-            line-height: 1.15;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
         }
 
-        /* Subtítulo Nítido e Levíssimo Cinza-Claro */
+        /* Subtítulo Nítido */
         .subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.25rem;
+            font-size: 1.05rem;
             font-weight: 400;
-            font-style: italic;
-            color: #d1d5db; /* Cinza claro de alta leitura */
+            color: #e5e7eb !important; /* Cinza quase branco super legível */
             margin-bottom: 24px;
-            line-height: 1.5;
+            line-height: 1.6;
             text-transform: lowercase;
         }
 
-        /* Tag dos fones de ouvido - Azul bem visível */
+        /* Tag Fone de Ouvido com fundo aceso */
         .headphone-tag {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(56, 189, 248, 0.15);
+            justify-content: center;
+            gap: 8px;
+            background-color: #1e293b;
             border: 1px solid #38bdf8;
             color: #38bdf8;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.85rem;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
             font-weight: 600;
-            letter-spacing: 0.3px;
             margin-bottom: 28px;
+            width: 100%;
         }
 
-        /* Botão "viva a experiência" verde vivo e marcante */
+        /* Botão VIVA A EXPERIÊNCIA com alto impacto visual */
         .play-button {
-            position: relative;
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            padding: 16px 36px;
-            font-size: 1.05rem;
-            font-weight: 600;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            font-weight: 700;
             color: #ffffff !important;
             background-color: #16a34a; /* Verde vivo */
-            border: 1px solid #22c55e;
-            border-radius: 50px;
+            border: 2px solid #22c55e;
+            border-radius: 40px;
             cursor: pointer;
             text-decoration: none;
             text-transform: lowercase;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
-            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(22, 163, 74, 0.5);
             width: 100%;
-            max-width: 280px;
         }
 
         .play-button:active {
@@ -122,39 +111,33 @@
             background-color: #15803d;
         }
 
-        /* 📱 Ajuste exclusivo para telas de celular */
+        /* Ajustes específicos para telas menores */
         @media (max-width: 480px) {
             .main-card {
-                padding: 34px 20px;
-                width: 90%;
+                padding: 30px 20px;
             }
 
             h1 {
-                font-size: 2.3rem;
-                margin-bottom: 14px;
+                font-size: 1.9rem;
             }
 
             .subtitle {
-                font-size: 1.15rem;
-                margin-bottom: 20px;
+                font-size: 0.98rem;
             }
 
             .headphone-tag {
-                font-size: 0.8rem;
-                padding: 6px 14px;
-                margin-bottom: 24px;
+                font-size: 0.85rem;
             }
 
             .play-button {
-                padding: 15px 28px;
                 font-size: 1rem;
+                padding: 16px 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cartão Central com Alto Contraste -->
     <div class="main-card">
         <h1>quando faltam palavras</h1>
         
