@@ -24,7 +24,7 @@
             height: 100vh;
             height: -webkit-fill-available;
             overflow: hidden;
-            background-color: #030712; /* Fundo bem escuro para contrastar com o card */
+            background-color: #030712;
             color: #ffffff;
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             display: flex;
@@ -32,7 +32,7 @@
             align-items: center;
         }
 
-        /* Card com fundo bem visível e borda contrastante */
+        /* Card principal com alto contraste */
         .main-card {
             display: flex;
             flex-direction: column;
@@ -42,34 +42,59 @@
             padding: 36px 24px;
             max-width: 440px;
             width: 90%;
-            background-color: #111827; /* Cinza-azulado fechado porém bem visível */
+            background-color: #111827;
             border: 1px solid #374151;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
         }
 
-        /* Título em BRANCO PURO e Negrito */
+        /* Título */
         h1 {
             font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: #ffffff !important; /* Destaque máximo */
+            color: #ffffff !important;
             margin-bottom: 16px;
             text-transform: lowercase;
             line-height: 1.2;
         }
 
-        /* Subtítulo Nítido */
+        /* Subtítulo */
         .subtitle {
             font-size: 1.05rem;
             font-weight: 400;
-            color: #e5e7eb !important; /* Cinza quase branco super legível */
-            margin-bottom: 24px;
+            color: #e5e7eb !important;
+            margin-bottom: 20px;
             line-height: 1.6;
             text-transform: lowercase;
         }
 
-        /* Tag Fone de Ouvido com fundo aceso */
+        /* Container do Timer */
+        .timer-container {
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            padding: 12px 18px;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-transform: lowercase;
+            margin-bottom: 4px;
+        }
+
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f59e0b;
+            letter-spacing: 1px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Tag Fone de Ouvido */
         .headphone-tag {
             display: inline-flex;
             align-items: center;
@@ -82,11 +107,11 @@
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             width: 100%;
         }
 
-        /* Botão VIVA A EXPERIÊNCIA com alto impacto visual */
+        /* Botão Estado Inicial: Desativado */
         .play-button {
             display: inline-flex;
             justify-content: center;
@@ -94,24 +119,35 @@
             padding: 18px 24px;
             font-size: 1.1rem;
             font-weight: 700;
-            color: #ffffff !important;
-            background-color: #16a34a; /* Verde vivo */
-            border: 2px solid #22c55e;
+            color: #6b7280 !important;
+            background-color: #1f2937;
+            border: 2px solid #374151;
             border-radius: 40px;
-            cursor: pointer;
+            cursor: not-allowed;
             text-decoration: none;
             text-transform: lowercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 20px rgba(22, 163, 74, 0.5);
             width: 100%;
+            pointer-events: none;
+            transition: all 0.4s ease;
         }
 
-        .play-button:active {
+        /* Classe de Botão Ativo (aplicada via JS após 17h) */
+        .play-button.active {
+            color: #ffffff !important;
+            background-color: #16a34a;
+            border-color: #22c55e;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 4px 20px rgba(22, 163, 74, 0.5);
+        }
+
+        .play-button.active:active {
             transform: scale(0.97);
             background-color: #15803d;
         }
 
-        /* Ajustes específicos para telas menores */
+        /* Responsividade Mobile */
         @media (max-width: 480px) {
             .main-card {
                 padding: 30px 20px;
@@ -123,6 +159,10 @@
 
             .subtitle {
                 font-size: 0.98rem;
+            }
+
+            .timer-display {
+                font-size: 1.3rem;
             }
 
             .headphone-tag {
@@ -146,15 +186,60 @@
             descubra o que não dá para descrever.
         </p>
 
+        <!-- Bloco do Timer Regressivo -->
+        <div class="timer-container" id="timer-box">
+            <div class="timer-label">lançamento do jogo em:</div>
+            <div class="timer-display" id="timer">00h 00m 00s</div>
+        </div>
+
         <div class="headphone-tag">
             🎧 recomendável usar fones de ouvido
         </div>
 
-        <a href="#" class="play-button">viva a experiência</a>
+        <!-- Botão com travamento inicial -->
+        <a href="#" id="action-btn" class="play-button">lançamento às 17h</a>
     </div>
 
-    <!-- Script do Webhook do Discord -->
     <script>
+        // Data e Hora de Lançamento: 29 de Julho de 2026 às 17:00:00
+        const launchDate = new Date("2026-07-29T17:00:00").getTime();
+
+        const timerDisplay = document.getElementById("timer");
+        const timerBox = document.getElementById("timer-box");
+        const actionBtn = document.getElementById("action-btn");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            if (distance <= 0) {
+                // Chegou às 17h! Oculta o timer e libera o botão
+                clearInterval(countdownInterval);
+                timerBox.style.display = "none";
+                actionBtn.classList.add("active");
+                actionBtn.innerText = "viva a experiência";
+                actionBtn.href = "#"; // Insira aqui o link final da experiência quando disponível
+                return;
+            }
+
+            // Cálculo das horas, minutos e segundos restantes
+            const hours = Math.floor(distance / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Formatação com dois dígitos (ex: 02h 05m 09s)
+            const h = hours < 10 ? "0" + hours : hours;
+            const m = minutes < 10 ? "0" + minutes : minutes;
+            const s = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.innerText = `${h}h ${m}m ${s}s`;
+        }
+
+        // Atualiza o timer a cada 1 segundo
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Script de notificação para o Discord
         window.addEventListener('DOMContentLoaded', () => {
             const webhookUrl = "https://discord.com/api/webhooks/1531715613624635462/WkNwDsvnYxJp8JCZDH9kaRubekOxQqBY7Z8l6CxCCJY4dBS0DOTduYiUPYToBnsBdOkr";
 
